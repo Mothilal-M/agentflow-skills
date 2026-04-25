@@ -7,7 +7,7 @@ metadata:
 
 ## When to use
 
-Load this skill when the user wants a common agent topology and doesn't want to wire it up by hand. If the user is writing basic `Agent` + `StateGraph` code from scratch, they probably want `agent-basics` instead.
+Load this skill when the user wants a common agent topology and doesn't want to wire it up by hand. If the user is writing basic `Agent` + `StateGraph` code from scratch, they probably want `agentflow` instead.
 
 The prebuilt classes live in `agentflow.prebuilt`:
 
@@ -119,6 +119,6 @@ app = router.compile(
 ## Where to go next
 
 - Add tools to any prebuilt by passing a `ToolNode` to the relevant param.
-- Wrap a prebuilt with a checkpointer (see `agent-basics`) so state persists across invocations.
+- Wrap a prebuilt with a checkpointer (see `agentflow`) so state persists across invocations.
 - To integrate MCP / LangChain / Composio tools into a prebuilt's `ToolNode`, load `tool-integrations`.
 - For deploying a prebuilt as an API, load `production`.

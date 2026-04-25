@@ -1,5 +1,5 @@
 ---
-name: agent-basics
+name: agentflow
 description: Build your first agent with 10xscale-agentflow (Agent class, StateGraph, ToolNode, streaming, checkpointing)
 metadata:
   tags: agentflow, agents, react, tools, streaming, checkpointing

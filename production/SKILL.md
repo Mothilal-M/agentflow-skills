@@ -166,4 +166,4 @@ The generated `Dockerfile` installs from `requirements.txt` (create one with `uv
 
 - Integrating external tools in production? Load `tool-integrations`.
 - Need a RAG / router scaffold? Load `prebuilt-patterns`.
-- Starting from scratch? Load `agent-basics` first.
+- Starting from scratch? Load `agentflow` first.

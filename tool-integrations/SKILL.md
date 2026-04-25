@@ -7,7 +7,7 @@ metadata:
 
 ## When to use
 
-Load this when the user is connecting external tools into an AgentFlow agent — MCP servers, LangChain's tool catalog, or Composio integrations. For plain local Python tools, use `agent-basics`.
+Load this when the user is connecting external tools into an AgentFlow agent — MCP servers, LangChain's tool catalog, or Composio integrations. For plain local Python tools, use `agentflow`.
 
 ## Install the extras you need
 
