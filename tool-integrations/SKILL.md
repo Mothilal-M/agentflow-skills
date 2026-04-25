@@ -29,7 +29,7 @@ MCP lets you connect to any MCP server — local or remote — that exposes tool
 
 ```python
 from fastmcp import Client
-from agentflow.graph import ToolNode
+from agentflow.core.graph import ToolNode
 
 mcp_config = {
     "mcpServers": {
@@ -58,7 +58,7 @@ Use LangChain's community tools directly. AgentFlow adapts them into native tool
 
 ```python
 from langchain_community.tools import DuckDuckGoSearchRun
-from agentflow.graph import ToolNode
+from agentflow.core.graph import ToolNode
 from agentflow.prebuilt.tools.langchain_adapter import from_langchain
 
 search = DuckDuckGoSearchRun()
@@ -73,7 +73,7 @@ Composio gives you pre-built integrations (Gmail, Slack, GitHub, Notion, etc.). 
 
 ```python
 from composio import ComposioToolSet, App
-from agentflow.graph import ToolNode
+from agentflow.core.graph import ToolNode
 from agentflow.prebuilt.tools.composio_adapter import from_composio
 
 tools = ComposioToolSet().get_tools(apps=[App.GITHUB])
@@ -90,7 +90,7 @@ AgentFlow tools can request DI-provided kwargs via their signature. Commonly inj
 - `state: AgentState | None` — full conversation state.
 
 ```python
-from agentflow.state import AgentState, Message
+from agentflow.core.state import AgentState, Message
 
 
 def audit_log(action: str, tool_call_id: str | None = None, state: AgentState | None = None) -> Message:

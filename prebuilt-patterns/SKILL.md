@@ -31,8 +31,8 @@ When in doubt: start with `ReactAgent`. Promote to `RAGAgent` once retrieval is 
 
 ```python
 from agentflow.prebuilt import ReactAgent
-from agentflow.graph import ToolNode
-from agentflow.state import Message
+from agentflow.core.graph import ToolNode
+from agentflow.core.state import Message
 
 
 def get_weather(location: str) -> str:
@@ -59,8 +59,8 @@ Two required nodes: `retriever` (fetches documents/context) and `synthesizer` (p
 
 ```python
 from agentflow.prebuilt import RAGAgent
-from agentflow.graph import ToolNode
-from agentflow.state import Message
+from agentflow.core.graph import ToolNode
+from agentflow.core.state import Message
 
 
 def search_docs(query: str) -> str:
@@ -88,7 +88,7 @@ A router node picks a route key; each route maps to a node that handles the requ
 
 ```python
 from agentflow.prebuilt import RouterAgent
-from agentflow.state import AgentState, Message
+from agentflow.core.state import AgentState, Message
 from agentflow.utils.constants import END
 
 

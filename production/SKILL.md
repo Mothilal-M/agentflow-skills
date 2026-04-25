@@ -60,37 +60,34 @@ pip install 10xscale-agentflow[pg_checkpoint]
 ```
 
 ```python
-from agentflow.checkpointer import PgRedisCheckpointer
+from agentflow.storage.checkpointer import PgCheckpointer
 
-checkpointer = PgRedisCheckpointer(
+checkpointer = PgCheckpointer(
     pg_dsn="postgresql://user:pass@localhost/agentflow",
-    redis_url="redis://localhost:6379/0",
+    redis_url="redis://localhost:6379/0",   # optional cache
 )
 app = graph.compile(checkpointer=checkpointer)
 ```
 
-Redis provides the fast lookup cache; Postgres is the durable store. The same `thread_id` resumes the same conversation.
+Postgres is the durable store; the optional Redis URL caches recent thread IDs. The same `thread_id` resumes the same conversation.
 
 ## Human-in-the-loop
 
 Pause the graph for approval; resume later with full state intact. Two moving parts:
 
 1. A **checkpointer** (so state survives the pause).
-2. An **interrupt** raised from a node.
+2. A node that **marks state as interrupted** and returns; the graph engine halts and persists.
 
 ```python
-from agentflow.graph import interrupt
-from agentflow.state import AgentState
+from agentflow.core.state import AgentState
 
-def approve_refund(state: AgentState):
+async def approve_refund(state: AgentState):
     amount = state.context[-1].content
-    decision = interrupt(f"Approve refund of {amount}? (yes/no)")
-    if decision.lower() != "yes":
-        return {"messages": ["Refund denied."]}
-    return {"messages": ["Refund issued."]}
+    state.set_interrupt(reason=f"Approve refund of {amount}?")
+    return {}  # halts here; checkpointer saves state under the current thread_id
 ```
 
-When `interrupt(...)` fires, `invoke()` returns with an `INTERRUPT` marker. Persist `thread_id`, collect the human decision, and re-invoke with `{"resume": decision}` in the config.
+When the next call comes in (with the same `thread_id` and the human's decision merged into state), check `state.is_interrupted()` / clear it with `state.clear_interrupt()` and continue. Use a checkpointer-backed flow so the pause survives process restarts.
 
 ## Callbacks (monitoring, validation, prompt-injection guards)
 
